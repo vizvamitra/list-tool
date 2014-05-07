@@ -1,0 +1,18 @@
+{"lists":[
+  {
+    "name":"Todolist",
+    "default":true,
+    "items":[
+      {
+        "text": "item1"
+      },
+      {
+        "text": "item2"
+      }
+    ]
+  },
+  {
+    "name":"Wishlist",
+    "items":[]
+  }
+]}
