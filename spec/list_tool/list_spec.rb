@@ -66,11 +66,24 @@ describe ListTool::List do
 
   end
 
+
+  describe '#clear!' do
+    it "clears items array" do
+      list.clear!
+      expect(list.items).to be_empty
+    end
+  end
+
+
   describe '#rename' do
     context 'argument is a string' do
       it 'renames list' do
         list.rename('new name')
         expect(list.name).to eq 'new name'
+      end
+
+      it 'returns old name' do
+        expect( list.rename('new name') ).to eq 'Todolist'
       end
     end
 

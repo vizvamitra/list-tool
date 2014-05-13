@@ -104,32 +104,21 @@ describe Data do
   end
 
 
-  describe '#replace_list' do
+  describe '#rename_list' do
 
     context 'success' do
-      it 'replaces given list with new one with given name' do
-        data = ListTool::Data.new(Factory.data)
-        expect(ListTool::List).to receive(:new).with('testlist')
-        data.replace_list(1, 'testlist')
+      it 'renames list with given index and returns old name' do
+        expect( data.lists[1] ).to receive(:rename).with('Testlist').and_return('Wishlist')
+        data.rename_list(1, 'Testlist')
       end
-
-      it 'returns new list' do
-        expect( data.replace_list(1, 'testlist').name ).to eq 'testlist'
-      end
-
-      context 'default list is being replaces' do
-        it 'clears default list' do
-          data.replace_list(0, 'newlist')
-          expect(data.default_list).to be_nil
-        end
-      end 
     end
 
     context 'no list with given index' do
       it 'returns nil' do
-        expect(data.replace_list(2, 'new_name')).to be_nil
+        expect(data.rename_list(2, 'new_name')).to be_nil
       end
     end
+
   end
 
 
@@ -167,6 +156,31 @@ describe Data do
 
     end
 
+  end
+
+
+  describe '#clear_list' do
+
+    context 'success' do
+      it 'clears list with given index' do
+        data.clear_list(0)
+        expect( data.lists[0].items ).to be_empty
+      end
+
+      it 'returns true' do
+        expect( data.clear_list(0) ).to be_true
+      end
+    end
+
+    context 'failure' do
+
+      context 'no list with given index' do
+        it 'returns nil' do
+          expect( data.clear_list(2) ).to be_nil
+        end
+      end
+
+    end
   end
 
 

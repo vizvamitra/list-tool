@@ -26,11 +26,14 @@ module ListTool
       list
     end
 
-    def replace_list(index, name)
+    def clear_list(index)
       return nil if @lists[index] == nil
-      @default_list = nil if @lists[index] == @default_list
-      @lists[index] = List.new(name)
-      @lists[index]
+      @lists[index].clear!
+    end
+
+    def rename_list(index, name)
+      return nil if @lists[index] == nil
+      @lists[index].rename(name)
     end
 
     def set_default_list(index)

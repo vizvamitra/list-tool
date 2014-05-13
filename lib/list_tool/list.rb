@@ -21,6 +21,10 @@ module ListTool
       end
     end
 
+    def clear!
+      @items = []
+    end
+
     def add_item text
       @items << Item.new(text)
     end
@@ -42,7 +46,9 @@ module ListTool
 
     def rename str
       raise ArgumentError, 'string expected' unless str.is_a?(String)
+      old_name = @name
       @name = str
+      old_name
     end
 
     def to_json

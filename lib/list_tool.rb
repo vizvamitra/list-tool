@@ -1,9 +1,15 @@
-require "list_tool/version"
-require "list_tool/list_tool"
-require "list_tool/item"
-require "list_tool/list"
-require "list_tool/data"
+require 'json'
+
+require_relative "./list_tool/version"
+require_relative "./list_tool/lister"
+require_relative "./list_tool/item"
+require_relative "./list_tool/list"
+require_relative "./list_tool/data"
+require_relative "./list_tool/json_parser"
+require_relative "./list_tool/file_manager"
 
 module ListTool
   # Your code goes here...
+  class FileAccessError < Exception; end
+  class FileNotFoundError < Exception; end
 end
