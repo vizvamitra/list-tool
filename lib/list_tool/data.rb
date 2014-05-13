@@ -20,7 +20,7 @@ module ListTool
       list
     end
 
-    def remove_list(index)
+    def delete_list(index)
       list = @lists.delete_at(index)
       @default_list = nil if @default_list == list
       list
@@ -51,7 +51,9 @@ module ListTool
     end
 
     def to_json
-      json = "{\"default\":#{@lists.index(@default_list)},\"lists\":["
+      json = "{"
+      json += "\"default\":#{@lists.index(@default_list)}," if @default_list
+      json += "\"lists\":["
       @lists.each do |list|
         json += list.to_json
         json += ',' unless list == @lists.last

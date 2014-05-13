@@ -74,22 +74,22 @@ describe Data do
   end
 
 
-  describe '#remove_list' do
+  describe '#delete_list' do
 
     context 'success' do
       it 'removes list with given number' do
-        data.remove_list(1)
+        data.delete_list(1)
         expect(data.lists.length).to eq 1
       end
 
       it 'returns deleted list' do
         list = data.lists[1]
-        expect(data.remove_list(1)).to eq list
+        expect(data.delete_list(1)).to eq list
       end
 
       context 'default list is being deleted' do
         it 'clears default list' do
-          data.remove_list(0)
+          data.delete_list(0)
           expect(data.default_list).to be_nil
         end
       end   
@@ -97,7 +97,7 @@ describe Data do
 
     context 'no list with given index' do
       it 'returns nil' do
-        expect(data.remove_list(2)).to be_nil
+        expect(data.delete_list(2)).to be_nil
       end
     end
      
@@ -213,6 +213,7 @@ describe Data do
           expect(data.lists).to eq lists
         end
       end
+
     end
 
   end
@@ -221,6 +222,13 @@ describe Data do
   describe '#to_json' do
     it 'returns correct json' do
       expect(data.to_json).to eq Factory.json
+    end
+
+    context 'default list not set' do
+      it 'returns json without "default_list" field' do
+        data = ListTool::Data.new(Factory.blank_data)
+        expect(data.to_json).to eq '{"lists":[]}'
+      end
     end
   end
 
