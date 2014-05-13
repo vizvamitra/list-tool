@@ -21,9 +21,6 @@ describe ListTool::List do
           expect(list.items.length).to eq 2
         end
 
-        it 'stores defaultness state' do
-          expect(list.is_default?).to be_true
-        end
       end
 
       context 'incorrect' do
@@ -59,9 +56,6 @@ describe ListTool::List do
         expect(list.name).to eq 'name'
       end
 
-      it 'stores defaultness state' do
-        expect(list.is_default?).to be_false
-      end
     end
 
     context 'wrong argument given' do
@@ -150,7 +144,7 @@ describe ListTool::List do
 
   describe '#to_json' do
     it 'returns json representation of list' do
-      json_str = "{'name':'Todolist','default':true,'items':[{'text':'item1'},{'text':'item2'}]}"
+      json_str = "{\"name\":\"Todolist\",\"items\":[{\"text\":\"item1\"},{\"text\":\"item2\"}]}"
       expect(list.to_json).to eq json_str
     end
   end

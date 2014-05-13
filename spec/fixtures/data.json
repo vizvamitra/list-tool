@@ -1,7 +1,7 @@
-{"lists":[
+{ "default":0,
+  "lists":[
   {
     "name":"Todolist",
-    "default":true,
     "items":[
       {
         "text": "item1"

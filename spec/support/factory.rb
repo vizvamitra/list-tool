@@ -10,6 +10,10 @@ class Factory
     File.read(File.join('spec', 'fixtures', 'data.json'))
   end
 
+  def self.json
+    data.to_json
+  end
+
   def self.data
     JSON.parse raw_data
   end

@@ -14,7 +14,7 @@ module ListTool
     end
 
     def to_json
-      "{'text':'#{@text}'}"
+      "{\"text\":\"#{@text}\"}"
     end
 
   end

@@ -7,12 +7,10 @@ module ListTool
       if arg.respond_to?(:to_str)
         @name = arg
         @items = []
-        @default = false
       elsif arg.is_a?(Hash)
         prepare_data(arg)
 
         @name = arg['name']
-        @default = arg['default']
 
         @items = []
         arg['items'].each do |item|
@@ -21,10 +19,6 @@ module ListTool
       else
         raise(ArgumentError, "argument expected to be Hash or String, #{arg.class} given")
       end
-    end
-
-    def is_default?
-      @default
     end
 
     def add_item text
@@ -52,7 +46,7 @@ module ListTool
     end
 
     def to_json
-      json = "{'name':'#{@name}','default':#{@default},'items':["
+      json = "{\"name\":\"#{@name}\",\"items\":["
       @items.each do |item|
         json += item.to_json
         json += ',' unless item == @items.last
@@ -65,7 +59,6 @@ module ListTool
     def prepare_data data
       data['items'] ||= []
       data['name'] ||= 'Anonimous list'
-      data['default'] = (data['default'] == true) ? true : false
 
       data['name'].respond_to?(:to_str) || raise(ArgumentError, 'name is not a string')      
       data['items'].is_a?(Array) || raise(ArgumentError, '"items" is not an array')

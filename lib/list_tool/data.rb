@@ -1,0 +1,63 @@
+module ListTool
+  class Data
+    attr_reader :lists, :default_list
+
+    def initialize(hash = {})
+      raise ArgumentError, 'argument is not a hash' unless hash.respond_to?(:to_hash)
+
+      hash['lists'] ||= []
+      raise ArgumentError, 'incorrect data given' unless hash['lists'].respond_to?(:to_ary)
+
+      @lists = []
+      hash['lists'].each { |list_data| add_list(list_data) }
+
+      set_default_list(hash['default']) if hash['default']
+    end
+
+    def add_list(data)
+      list = List.new(data)
+      @lists << list
+      list
+    end
+
+    def remove_list(index)
+      list = @lists.delete_at(index)
+      @default_list = nil if @default_list == list
+      list
+    end
+
+    def replace_list(index, name)
+      return nil if @lists[index] == nil
+      @default_list = nil if @lists[index] == @default_list
+      @lists[index] = List.new(name)
+      @lists[index]
+    end
+
+    def set_default_list(index)
+      raise ArgumentError, 'argument is not an integer' unless index.respond_to?(:to_int)
+      return nil if @lists[index] == nil
+      @default_list = @lists[index]
+    end
+
+    def move_list(index, direction)
+      case direction
+      when :up
+        return unless (1...@lists.length).include?(index)
+        @lists[index], @lists[index-1] = @lists[index-1], @lists[index]
+      when :down
+        return unless (0...(@lists.length-1)).include?(index)
+        @lists[index], @lists[index+1] = @lists[index+1], @lists[index]
+      end
+    end
+
+    def to_json
+      json = "{\"default\":#{@lists.index(@default_list)},\"lists\":["
+      @lists.each do |list|
+        json += list.to_json
+        json += ',' unless list == @lists.last
+      end
+      json += ']}'
+    end
+    
+  end
+end

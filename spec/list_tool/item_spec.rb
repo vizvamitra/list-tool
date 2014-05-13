@@ -36,7 +36,7 @@ describe ListTool::Item do
   describe '#to_json' do
 
     it 'returns correct json' do
-      expect(item.to_json).to eq "{'text':'item1'}"
+      expect(item.to_json).to eq "{\"text\":\"item1\"}"
     end
 
   end
