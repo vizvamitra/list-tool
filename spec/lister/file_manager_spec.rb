@@ -1,7 +1,7 @@
 require_relative '../spec_helper.rb'
 
-describe ListTool::FileManager do
-  let(:fm){ListTool::FileManager}
+describe Lister::FileManager do
+  let(:fm){Lister::FileManager}
 
   describe '.load' do
 
@@ -17,14 +17,14 @@ describe ListTool::FileManager do
       context 'access denied to specified file' do
         it 'raises FileAccessError' do
           allow(File).to receive(:read).and_raise(Errno::EACCES)
-          expect{ fm.load('some_file') }.to raise_error(ListTool::FileAccessError)
+          expect{ fm.load('some_file') }.to raise_error(Lister::FileAccessError)
         end
       end
 
       context "file doesn't exist" do
         it 'raises NoFileError' do
           allow(File).to receive(:read).and_raise(Errno::ENOENT)
-          expect{ fm.load('some_file') }.to raise_error(ListTool::FileNotFoundError)
+          expect{ fm.load('some_file') }.to raise_error(Lister::FileNotFoundError)
         end
       end
 
@@ -42,7 +42,7 @@ describe ListTool::FileManager do
 
   describe '.save' do
     let(:filename){ "some_file" }
-    let(:data){ ListTool::Data.new }
+    let(:data){ Lister::Data.new }
 
     context 'success' do
       it 'saves given data to specified file' do
@@ -50,7 +50,7 @@ describe ListTool::FileManager do
         allow(File).to receive(:open).with(filename, 'w').and_yield(file)
         expect(file).to receive(:<<).with('{"lists":[]}')
 
-        ListTool::FileManager.save(filename, data)
+        Lister::FileManager.save(filename, data)
       end
     end
 
@@ -59,14 +59,14 @@ describe ListTool::FileManager do
       context 'access denied to specified file' do
         it 'raises FileAccessError' do
           allow(File).to receive(:open).with(filename, 'w').and_raise(Errno::EACCES)
-          expect{ fm.save('some_file', data) }.to raise_error(ListTool::FileAccessError)
+          expect{ fm.save('some_file', data) }.to raise_error(Lister::FileAccessError)
         end
       end
 
       context "file doesn't exist" do
         it 'raises NoFileError' do
           allow(File).to receive(:open).with(filename, 'w').and_raise(Errno::ENOENT)
-          expect{ fm.save('some_file', data) }.to raise_error(ListTool::FileNotFoundError)
+          expect{ fm.save('some_file', data) }.to raise_error(Lister::FileNotFoundError)
         end
       end
 

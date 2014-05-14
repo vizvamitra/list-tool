@@ -1,4 +1,4 @@
-module ListTool
+module Lister
   class List
     include Enumerable
 

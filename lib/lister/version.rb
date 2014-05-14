@@ -1,3 +1,3 @@
-module ListTool
+module Lister
   VERSION = "0.0.1"
 end

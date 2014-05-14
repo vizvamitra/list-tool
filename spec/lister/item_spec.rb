@@ -1,7 +1,7 @@
 require_relative '../spec_helper.rb'
 
-describe ListTool::Item do
-  let (:item){ListTool::Item.new(Factory.item)}
+describe Lister::Item do
+  let (:item){Lister::Item.new(Factory.item)}
   
   describe '#initialize' do
 
@@ -14,20 +14,20 @@ describe ListTool::Item do
 
       context 'failure' do
         it 'raises ArgumentError' do
-          expect{ ListTool::Item.new({"text" => 123}) }.to raise_error(ArgumentError)
+          expect{ Lister::Item.new({"text" => 123}) }.to raise_error(ArgumentError)
         end
       end
     end
 
     context 'string given' do
       it 'stores text' do
-        expect(ListTool::Item.new('text').text).to eq 'text'
+        expect(Lister::Item.new('text').text).to eq 'text'
       end
     end
 
     context 'wrong argument given' do
       it 'raises ArgumentError' do
-        expect{ListTool::Item.new(123)}.to raise_error(ArgumentError)
+        expect{Lister::Item.new(123)}.to raise_error(ArgumentError)
       end
     end
 

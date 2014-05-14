@@ -1,13 +1,13 @@
 require_relative '../spec_helper.rb'
 
-describe ListTool::Lister do
-  let(:lister){ ListTool::Lister.from_hash(Factory.data) }
+describe Lister::Lister do
+  let(:lister){ Lister::Lister.from_hash(Factory.data) }
 
   describe '#initialize' do
 
     it 'creates Lister with empty data' do
-      expect(ListTool::Data).to receive(:new).with()
-      ListTool::Lister.new
+      expect(Lister::Data).to receive(:new).with()
+      Lister::Lister.new
     end
 
   end
@@ -22,9 +22,9 @@ describe ListTool::Lister do
 
   describe '.from_json' do
     it 'creates new Lister from given json string' do
-      allow( ListTool::JsonParser ).to receive(:parse).and_return(Factory.data)
+      allow( Lister::JsonParser ).to receive(:parse).and_return(Factory.data)
 
-      lister = ListTool::Lister.from_json( Factory.json )
+      lister = Lister::Lister.from_json( Factory.json )
       expect( lister.lists ).to eq ['Todolist', 'Wishlist']
     end
   end
@@ -38,33 +38,33 @@ describe ListTool::Lister do
 
 
   describe '#load' do
-    let (:lister){ListTool::Lister.new}
+    let (:lister){Lister::Lister.new}
 
     it 'loads data from given file' do
       json = Factory.json
-      allow( ListTool::FileManager ).to receive(:load).and_return( json )
-      allow( ListTool::JsonParser ).to receive(:parse).with(json).and_return( Factory.data )
+      allow( Lister::FileManager ).to receive(:load).and_return( json )
+      allow( Lister::JsonParser ).to receive(:parse).with(json).and_return( Factory.data )
       lister.load('data_file')
       expect( lister.lists ).to eq ['Todolist', 'Wishlist']
     end
 
     it 'returns self' do
-      allow( ListTool::FileManager ).to receive(:load)
-      allow( ListTool::JsonParser ).to receive(:parse)
-      allow( ListTool::Data ).to receive(:new).and_return( ListTool::Data.new() )
+      allow( Lister::FileManager ).to receive(:load)
+      allow( Lister::JsonParser ).to receive(:parse)
+      allow( Lister::Data ).to receive(:new).and_return( Lister::Data.new() )
       expect( lister.load('data_file') ).to eq lister
     end
   end
 
 
   describe '#save' do
-    let (:lister){ListTool::Lister.new}
+    let (:lister){Lister::Lister.new}
     let(:filename){ 'test_file' }
 
     it 'calls FileManager.save to save its data to file' do
-      data = ListTool::Data.new
+      data = Lister::Data.new
       lister.instance_variable_set(:@data, data)
-      expect( ListTool::FileManager ).to receive(:save).with(filename, data)
+      expect( Lister::FileManager ).to receive(:save).with(filename, data)
       lister.save(filename)
     end
   end
@@ -92,8 +92,8 @@ describe ListTool::Lister do
 
 
   describe '#inspect' do
-    it "returns '#<ListTool::Lister:obj_id>'" do
-      expect( lister.inspect ).to eq "#<ListTool::Lister:0x#{lister.__id__.to_s(16)}>"
+    it "returns '#<Lister::Lister:obj_id>'" do
+      expect( lister.inspect ).to eq "#<Lister::Lister:0x#{lister.__id__.to_s(16)}>"
     end
   end
 

@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'list_tool/version'
+require 'lister/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "list-tool"
-  spec.version       = ListTool::VERSION
+  spec.name          = "lister"
+  spec.version       = Lister::VERSION
   spec.authors       = ["Vizvamitra"]
   spec.email         = ["vizvamitra@gmail.com"]
-  spec.summary       = "A tool to manage lists (like to-do list) in your app or unix console"
+  spec.summary       = "A class to manage lists (like to-do list) in your app or unix console"
   spec.description   = "Will write it later"
-  spec.homepage      = "http://github.com/vizvamitra/list_tool"
+  spec.homepage      = "http://github.com/vizvamitra/lister"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -19,9 +19,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "guard"
-  spec.add_development_dependency "guard-rspec"
-  spec.add_development_dependency "rb-readline"
+  spec.add_development_dependency "rake", "~> 10.3.1"
+  spec.add_development_dependency "rspec", "~> 2.14.1"
+  spec.add_development_dependency "guard", "~> 2.6.0"
+  spec.add_development_dependency "guard-rspec", "~> 4.2.8"
+  spec.add_development_dependency "rb-readline", "~> 0.5.1"
 end

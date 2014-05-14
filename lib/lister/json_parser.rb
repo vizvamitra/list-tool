@@ -1,4 +1,4 @@
-module ListTool
+module Lister
   class JsonParser
 
     def self.parse json

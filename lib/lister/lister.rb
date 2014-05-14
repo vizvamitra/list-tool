@@ -1,4 +1,4 @@
-module ListTool
+module Lister
   class Lister
 
     def initialize
@@ -40,21 +40,21 @@ module ListTool
     end
 
     def method_missing(name, *args, &block)
-      result= if name =~ /_list$/
-                @data.send(name, *args, &block)
-              elsif name =~ /_item$/
-                list = if args[-1].is_a?(Hash) && args[-1].has_key?(:list)
-                          return nil if @data.lists[ args[-1][:list] ].nil?
-                          index = args.pop()[:list]
-                          @data.lists[index]
-                        else
-                          @data.default_list
-                        end
-                list.send(name, *args, &block)
-              else
-                super
-              end
+      if name =~ /_list$/
+        object = @data
+      elsif name =~ /_item$/
+        object = if args[-1].is_a?(Hash) && args[-1].has_key?(:list)
+                  return nil if @data.lists[ args[-1][:list] ].nil?
+                  index = args.pop()[:list]
+                  @data.lists[index]
+                else
+                  @data.default_list
+                end
+      else
+        super
+      end
 
+      result = object.send(name, *args, &block)
       return nil if result.nil?
       self
     rescue NoMethodError => e

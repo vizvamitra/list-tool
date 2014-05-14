@@ -1,4 +1,4 @@
-module ListTool
+module Lister
   class FileManager
 
     def self.load filename

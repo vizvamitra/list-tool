@@ -1,14 +1,14 @@
 require_relative '../spec_helper.rb'
 
 describe Data do 
-  let (:data) { ListTool::Data.new(Factory.data) }
+  let (:data) { Lister::Data.new(Factory.data) }
 
   describe '#initialize' do
 
     context 'success' do
       context 'from initial data' do
         it "stores objects of List class" do
-          expect(data.lists[0]).to be_an_instance_of(ListTool::List)
+          expect(data.lists[0]).to be_an_instance_of(Lister::List)
         end
 
         it 'stores 2 lists' do
@@ -22,7 +22,7 @@ describe Data do
 
       context 'no arguments' do
         it 'creates new Data instance with empty array of lists' do
-          expect(ListTool::Data.new().lists).to be_empty
+          expect(Lister::Data.new().lists).to be_empty
         end
       end
 
@@ -31,19 +31,19 @@ describe Data do
     context 'failure' do
       context 'argument is not a hash' do
         it 'raises ArgumentError' do
-          expect{ListTool::Data.new('not_a_hash')}.to raise_error(ArgumentError)
+          expect{Lister::Data.new('not_a_hash')}.to raise_error(ArgumentError)
         end
       end
 
       context 'no "lists" key in given hash' do
         it 'creates new Data instance with empty lists array' do
-          expect(ListTool::Data.new({}).lists).to be_empty
+          expect(Lister::Data.new({}).lists).to be_empty
         end
       end
 
       context '"lists" is not an array' do
         it 'raises ArgumentError' do
-          expect{ListTool::Data.new("lists" => 'not_an_array')}.to raise_error(ArgumentError)
+          expect{Lister::Data.new("lists" => 'not_an_array')}.to raise_error(ArgumentError)
         end
       end
     end
@@ -68,7 +68,7 @@ describe Data do
     end
 
     it 'returns list object' do
-      expect(data.add_list(Factory.list)).to be_an_instance_of(ListTool::List)
+      expect(data.add_list(Factory.list)).to be_an_instance_of(Lister::List)
     end
 
   end
@@ -248,7 +248,7 @@ describe Data do
 
     context 'default list not set' do
       it 'returns json without "default_list" field' do
-        data = ListTool::Data.new(Factory.blank_data)
+        data = Lister::Data.new(Factory.blank_data)
         expect(data.to_json).to eq '{"lists":[]}'
       end
     end

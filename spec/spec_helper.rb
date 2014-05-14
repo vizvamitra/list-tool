@@ -2,7 +2,7 @@
 # SimpleCov.start
 
 require 'rspec'
-require_relative '../lib/list_tool'
+require_relative '../lib/lister'
 require_relative 'support/factory'
 
 RSpec.configure do |config|
