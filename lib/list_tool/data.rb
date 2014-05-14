@@ -1,5 +1,7 @@
 module ListTool
   class Data
+    include Enumerable
+    
     attr_reader :lists, :default_list
 
     def initialize(hash = {})
@@ -12,6 +14,10 @@ module ListTool
       hash['lists'].each { |list_data| add_list(list_data) }
 
       set_default_list(hash['default']) if hash['default']
+    end
+
+    def each
+      @lists.each { |list| yield(list) }
     end
 
     def add_list(data)

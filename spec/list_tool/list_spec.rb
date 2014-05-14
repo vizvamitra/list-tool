@@ -99,12 +99,64 @@ describe ListTool::List do
       list.add_item('new item')
       expect(list.items.length).to eq 3
     end
+
+    it 'returns not nil' do
+      expect(list.add_item('new item')).not_to be_nil
+    end
   end
 
   describe '#delete_item' do
-    it 'removes item with given number' do
-      list.delete_item(1)
-      expect(list.items[1]).to be_nil
+
+    context 'success' do
+      it 'removes item with given number' do
+        list.delete_item(1)
+        expect(list.items[1]).to be_nil
+      end
+
+      it 'returns not nil' do
+        expect( list.delete_item(1) ).not_to be_nil
+      end
+    end
+
+    context 'no item with given number' do
+      it 'returns nil' do
+        expect( list.delete_item(3) ).to be_nil
+      end 
+    end
+  end
+
+  describe '#change_item' do
+    context 'success' do
+      it 'replaces text of speified item' do
+        list.change_item(1, 'new_text')
+        expect(list.items[1].text).to eq 'new_text'
+      end
+
+      it 'returns not nil' do
+        expect( list.change_item(1, 'new_text') ).not_to be_nil
+      end
+    end
+
+    context 'failure' do
+
+      context 'no item with given index' do
+        it 'returns nil' do
+          expect( list.change_item(3, 'test') ).to be_nil
+        end
+      end
+
+      context 'index is not an integer' do
+        it 'raises ArgumentError' do
+          expect{ list.change_item('abc', 'test') }.to raise_error(ArgumentError)
+        end
+      end
+
+      context 'new_text is not a string' do
+        it 'raises ArgumentError' do
+          expect{ list.change_item(0, 1) }.to raise_error(ArgumentError)
+        end
+      end
+
     end
   end
 
@@ -119,6 +171,10 @@ describe ListTool::List do
       it 'moves item down' do
         list.move_item(0, :down)
         expect(list.items[1].text).to eq 'item1'
+      end
+
+      it 'returns not nil' do
+        expect( list.move_item(1, :up) ).not_to be_nil
       end
     end
 

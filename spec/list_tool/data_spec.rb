@@ -92,7 +92,7 @@ describe Data do
           data.delete_list(0)
           expect(data.default_list).to be_nil
         end
-      end   
+      end
     end
 
     context 'no list with given index' do
@@ -110,6 +110,10 @@ describe Data do
       it 'renames list with given index and returns old name' do
         expect( data.lists[1] ).to receive(:rename).with('Testlist').and_return('Wishlist')
         data.rename_list(1, 'Testlist')
+      end
+
+      it 'returns not nil' do
+        expect( data.rename_list(1, 'Testlist') ).not_to be_nil
       end
     end
 
@@ -195,6 +199,10 @@ describe Data do
       it 'moves list down' do
         data.move_list(0, :down)
         expect(data.lists[1].name).to eq 'Todolist'
+      end
+
+      it 'returns not nil' do
+        expect( data.move_list(1, :up) ).not_to be_nil
       end
     end
 

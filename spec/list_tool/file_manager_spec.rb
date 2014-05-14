@@ -41,19 +41,42 @@ describe ListTool::FileManager do
 
 
   describe '.save' do
+    let(:filename){ "some_file" }
+    let(:data){ ListTool::Data.new }
 
     context 'success' do
       it 'saves given data to specified file' do
         file = double('File')
-        allow(File).to receive(:open).with('test_file', 'w').and_yield(file)
+        allow(File).to receive(:open).with(filename, 'w').and_yield(file)
         expect(file).to receive(:<<).with('{"lists":[]}')
 
-        ListTool::FileManager.save(ListTool::Data.new, 'test_file')
+        ListTool::FileManager.save(filename, data)
       end
     end
 
     context 'failure' do
-      it 'raises errors when needed'
+      
+      context 'access denied to specified file' do
+        it 'raises FileAccessError' do
+          allow(File).to receive(:open).with(filename, 'w').and_raise(Errno::EACCES)
+          expect{ fm.save('some_file', data) }.to raise_error(ListTool::FileAccessError)
+        end
+      end
+
+      context "file doesn't exist" do
+        it 'raises NoFileError' do
+          allow(File).to receive(:open).with(filename, 'w').and_raise(Errno::ENOENT)
+          expect{ fm.save('some_file', data) }.to raise_error(ListTool::FileNotFoundError)
+        end
+      end
+
+      context 'unknown error' do
+        it 'raises IOError' do
+          allow(File).to receive(:open).with(filename, 'w').and_raise(StandardError)
+          expect{ fm.save('some_file', data) }.to raise_error(IOError)
+        end
+      end
+
     end
 
   end
