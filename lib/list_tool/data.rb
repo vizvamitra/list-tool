@@ -1,4 +1,5 @@
-module Lister
+module ListTool
+
   class Data
     include Enumerable
     
@@ -69,6 +70,6 @@ module Lister
       end
       json += ']}'
     end
-    
+      
   end
 end

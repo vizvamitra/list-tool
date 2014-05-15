@@ -1,4 +1,5 @@
-module Lister
+module ListTool
+
   class List
     include Enumerable
 
@@ -83,4 +84,5 @@ module Lister
     end
 
   end
+
 end

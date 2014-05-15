@@ -1,4 +1,4 @@
-module Lister
+module ListTool
   class Lister
 
     def initialize

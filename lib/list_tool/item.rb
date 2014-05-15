@@ -1,4 +1,5 @@
-module Lister
+module ListTool
+
   class Item
     attr_accessor :text
 
@@ -18,4 +19,5 @@ module Lister
     end
 
   end
+
 end

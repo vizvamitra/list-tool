@@ -1,13 +1,13 @@
 require_relative '../spec_helper.rb'
 
-describe Lister::List do
+describe ListTool::List do
 
-  let (:list) { Lister::List.new(Factory.list) }
+  let (:list) { ListTool::List.new(Factory.list) }
 
   describe '#initialize' do
 
     it 'stores items' do
-      expect(list.items[0]).to be_an_instance_of(Lister::Item)
+      expect(list.items[0]).to be_an_instance_of(ListTool::Item)
     end
 
     context 'hash given' do
@@ -26,19 +26,19 @@ describe Lister::List do
       context 'incorrect' do
         context 'name is not a string' do
           it 'raises ArgumentError' do
-            expect{Lister::List.new({'name' => 123, 'items' => []})}.to raise_error(ArgumentError)
+            expect{ListTool::List.new({'name' => 123, 'items' => []})}.to raise_error(ArgumentError)
           end
         end
 
         context 'items is not an array or nil' do
           it 'raises ArgumentError' do
-            expect{Lister::List.new({'name' => 'name', 'items' => 'not an array'})}.to raise_error(ArgumentError)
+            expect{ListTool::List.new({'name' => 'name', 'items' => 'not an array'})}.to raise_error(ArgumentError)
           end
         end
 
         context 'items is nil' do
           it 'creates list with no items' do
-            expect(Lister::List.new({'name' => 'name'}).items.length).to be 0
+            expect(ListTool::List.new({'name' => 'name'}).items.length).to be 0
           end
         end
       end
@@ -46,7 +46,7 @@ describe Lister::List do
     end
 
     context 'string given' do
-      let (:list) { Lister::List.new('name') }
+      let (:list) { ListTool::List.new('name') }
 
       it 'creates blank list' do
         expect(list.items).to be_empty
@@ -60,7 +60,7 @@ describe Lister::List do
 
     context 'wrong argument given' do
       it 'raises ArgumentError' do
-        expect{Lister::List.new(123)}.to raise_error(ArgumentError)
+        expect{ListTool::List.new(123)}.to raise_error(ArgumentError)
       end
     end
 
