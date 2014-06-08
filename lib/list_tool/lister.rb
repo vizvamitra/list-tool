@@ -31,12 +31,27 @@ module ListTool
     end
 
     def lists
-      @data.map { |list| list.name }
+      out = {}
+      @data.each do |list|
+        out[list.name] = list.items.count
+      end
+      out
     end
 
-    def list(index)
-      return nil if @data.lists[index].nil?
-      @data.lists[index].map{ |item| item.text }
+    def list(index=nil)
+      list = if index
+              return nil if @data.lists[index].nil?
+              @data.lists[index]
+            else
+              raise NoDefaultListError, "default list not set" if @data.default_list.nil?
+              @data.default_list
+            end
+
+      out = {name: list.name, items: []}
+      list.items.each do |item|
+        out[:items] << item.text
+      end
+      out
     end
 
     def method_missing(name, *args, &block)
@@ -48,6 +63,7 @@ module ListTool
                   index = args.pop()[:list]
                   @data.lists[index]
                 else
+                  raise NoDefaultListError, "default list not set" if @data.default_list.nil?
                   @data.default_list
                 end
       else

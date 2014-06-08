@@ -6,7 +6,7 @@ describe ListTool::Lister do
   describe '#initialize' do
 
     it 'creates Lister with empty data' do
-      expect(ListTool::Data).to receive(:new).with()
+      expect(ListTool::Data).to receive(:new).with no_args
       ListTool::Lister.new
     end
 
@@ -15,7 +15,7 @@ describe ListTool::Lister do
 
   describe '.from_hash' do
     it 'creates new Lister from given hash' do
-      expect( lister.lists ).to eq ['Todolist', 'Wishlist']
+      expect( lister.lists ).to eq( {'Todolist'=>2, 'Wishlist'=>0} )
     end
   end
 
@@ -25,14 +25,14 @@ describe ListTool::Lister do
       allow( ListTool::JsonParser ).to receive(:parse).and_return(Factory.data)
 
       lister = ListTool::Lister.from_json( Factory.json )
-      expect( lister.lists ).to eq ['Todolist', 'Wishlist']
+      expect( lister.lists ).to eq( {'Todolist'=>2, 'Wishlist'=>0} )
     end
   end
 
 
   describe '#lists' do
-    it 'returna an array of list names' do
-      expect( lister.lists ).to eq ['Todolist', 'Wishlist']
+    it 'returna a hash of list names and item counts' do
+      expect( lister.lists ).to eq( {'Todolist'=>2, 'Wishlist'=>0} )
     end
   end
 
@@ -45,7 +45,7 @@ describe ListTool::Lister do
       allow( ListTool::FileManager ).to receive(:load).and_return( json )
       allow( ListTool::JsonParser ).to receive(:parse).with(json).and_return( Factory.data )
       lister.load('data_file')
-      expect( lister.lists ).to eq ['Todolist', 'Wishlist']
+      expect( lister.lists ).to eq( {'Todolist'=>2, 'Wishlist'=>0} )
     end
 
     it 'returns self' do
@@ -74,8 +74,14 @@ describe ListTool::Lister do
 
     context 'success' do
       context 'no options' do
-        it 'returns array of item texts' do
-          expect( lister.list(0) ).to eq ['item1', 'item2']
+        it 'returns hash with list name and array of item texts' do
+          expect( lister.list(0) ).to eq( {name: 'Todolist', items: ['item1', 'item2']} )
+        end
+      end
+
+      context 'list number not given' do
+        it 'returns contents of default list' do
+          expect( lister.list ).to eq( {name: 'Todolist', items: ['item1', 'item2']} )
         end
       end
     end
@@ -84,6 +90,13 @@ describe ListTool::Lister do
       context 'no list with given index' do
         it 'returns nil' do
           expect( lister.list(2) ).to be_nil
+        end
+      end
+
+      context 'default list not set and list not given' do
+        it 'raises NoDefaultListError' do
+          lister = ListTool::Lister.new
+          expect{ lister.list }.to raise_error(ListTool::NoDefaultListError)
         end
       end
     end
@@ -156,6 +169,13 @@ describe ListTool::Lister do
       context 'method returned nil' do
         it 'returns nil' do
           expect( lister.delete_item(3) ).to be_nil
+        end
+      end
+
+      context 'list number not specified and default list not set' do
+        it 'raises NoDefaultListError' do
+          lister = ListTool::Lister.new
+          expect{ lister.add_item('new item') }.to raise_error(ListTool::NoDefaultListError)
         end
       end
 

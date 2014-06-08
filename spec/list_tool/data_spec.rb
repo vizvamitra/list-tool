@@ -172,7 +172,7 @@ describe Data do
       end
 
       it 'returns true' do
-        expect( data.clear_list(0) ).to be_true
+        expect( data.clear_list(0) ).to be_truthy
       end
     end
 
