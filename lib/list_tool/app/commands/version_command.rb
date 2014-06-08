@@ -16,7 +16,7 @@ module ListTool
       end
 
       def self.help
-        "  -v,  --version\t\tPrint version of program"
+        " -v,  --version\t\t\tPrint version"
       end
 
     end

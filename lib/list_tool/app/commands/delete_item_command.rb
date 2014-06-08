@@ -1,19 +1,19 @@
 module ListTool
   module App
 
-    class AddItemCommand
+    class DeleteItemCommand
 
       def self.match? arg
-        ['a', 'add-item'].include? arg
+        ['d', 'del-item'].include? arg
       end
 
       def self.parse argv
         raise ArgumentError, "expected argument to be an array, #{argv.class} given" unless argv.is_a? Array
 
         item, list = argv.shift(2)
-        raise ArgumentError, 'item text not specified' if item.nil?
+        raise ArgumentError, 'item number not specified' if item.nil?
 
-        out = {text: item}
+        out = {item: Integer(item) - 1} rescue raise(ArgumentError, 'item number must be an integer')
         
         if list
           out[:list] = Integer(list) - 1 rescue raise(ArgumentError, 'list number must be an integer')
@@ -24,13 +24,13 @@ module ListTool
       end
 
       def self.execute options, lister
-        args = [ options.delete(:text) ]
-        args << options if options[:list]
-        raise(ListNotFoundError, 'no list with given number') if lister.add_item(*args).nil?
+        args = [ options[:item] ]
+        args << {list: options[:list]} if options[:list]
+        raise(ListNotFoundError, 'no list with given number') if lister.delete_item(*args).nil?
       end
 
       def self.help
-        "  a,  add-item TEXT [LIST]\tAdd item with TEXT to given or default list"
+        "  d,  del-item ITEM [LIST]\tDelete ITEM from given or default list"
       end
 
     end

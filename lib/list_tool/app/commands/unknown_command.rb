@@ -13,7 +13,7 @@ module ListTool
       end
 
       def self.execute options, lister
-        raise UnknownCommandError, "unknown command: #{@unknown_command}"
+        raise UnknownCommandError, "unknown command: '#{@unknown_command}'"
       end
 
       def self.help

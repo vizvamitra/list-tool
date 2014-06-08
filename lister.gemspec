@@ -9,14 +9,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Dmitrii Krasnov"]
   spec.email         = ["vizvamitra@gmail.com"]
   spec.summary       = "list-tool-#{ListTool::VERSION}"
-  spec.description   = "A tool to manage lists of strings (like todos) in your app"
+  spec.description   = "A tool to manage lists of strings (like todos) in your app or terminal"
   spec.homepage      = "http://github.com/vizvamitra/lister"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files lib/*`.split($/)
   spec.test_files    = `git ls-files spec/*`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.test_files    = spec.files.grep(%r{^(spec|features)/})
   spec.require_paths = ["lib"]
 
   spec.required_ruby_version = '>= 1.9.3'

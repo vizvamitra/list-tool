@@ -43,6 +43,12 @@ describe ListTool::App::ShowItemsCommand do
         end
       end
 
+      context 'when list number is less than 1' do
+        it 'raises ArgumentError' do
+          expect{ subject.parse(['0']) }.to raise_error( ArgumentError )
+        end
+      end
+
       context 'when not an array given' do
         it 'raises ArgumentError' do
           expect{ subject.parse "not_an_array" }.to raise_error( ArgumentError )

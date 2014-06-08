@@ -16,7 +16,7 @@ module ListTool
       end
 
       def self.help
-        "  -h,  --help\t\t\tPrint this message"
+        " -h,  --help\t\t\tPrint this message"
       end
 
     end

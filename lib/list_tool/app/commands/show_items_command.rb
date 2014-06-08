@@ -11,11 +11,10 @@ module ListTool
         raise ArgumentError, "expected argument to be an array, #{argv.class} given" unless argv.is_a? Array
         list = argv.shift
 
-        begin
-          list = Integer( list ) - 1
-        rescue
-          raise ArgumentError, "list number must be an integer"
-        end if list
+        if list
+          list = Integer( list ) - 1 rescue raise(ArgumentError, 'list number must be an integer')
+          raise ArgumentError, "list number can't be less than 1" if list < 0
+        end
 
         list ? {list: list} : {}
       end

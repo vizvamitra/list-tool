@@ -8,10 +8,10 @@ module ListTool
       end
 
       def self.parse argv
-        raise ArgumentError unless argv.is_a? Array
+        raise ArgumentError, "expected argument to be an array, #{argv.class} given" unless argv.is_a? Array
         name = argv.shift
-        raise ArgumentError if name.nil?
-        raise ArgumentError unless name.is_a? String
+        raise ArgumentError, 'list name not specified' if name.nil?
+        raise ArgumentError, 'name is not a string' unless name.is_a? String
 
         {name: name}
       end
