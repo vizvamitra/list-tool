@@ -70,7 +70,7 @@ describe ListTool::App::AddItemCommand do
 
     context 'success' do
       it 'calls lister.add_item with given options' do
-        expect(lister).to receive(:add_item).with('item text', {}).and_return("not_nil")
+        expect(lister).to receive(:add_item).with('item text').and_return("not_nil")
         subject.execute({text: 'item text'}, lister)
       end
     end

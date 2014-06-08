@@ -2,6 +2,7 @@ require_relative './commands/add_item_command.rb'
 require_relative './commands/show_items_command.rb'
 require_relative './commands/add_list_command.rb'
 require_relative './commands/show_lists_command.rb'
+require_relative './commands/use_command.rb'
 require_relative './commands/unknown_command.rb'
 
 module ListTool

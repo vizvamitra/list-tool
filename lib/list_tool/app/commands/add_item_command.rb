@@ -25,8 +25,9 @@ module ListTool
       end
 
       def self.execute options, lister
-        text = options.delete(:text)
-        raise ListNotFoundError if lister.add_item(text, options).nil?
+        args = [ options.delete(:text) ]
+        args << options if options[:list]
+        raise(ListNotFoundError, 'no list with given number') if lister.add_item(*args).nil?
       end
 
       def self.help
