@@ -39,4 +39,11 @@ describe ListTool::Item do
     end
   end
 
+  describe '#text=' do
+    it 'substitutes " with \'' do
+      item.text = 'text with ""'
+      expect(item.text).to eq "text with ''"
+    end
+  end
+
 end

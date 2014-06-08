@@ -3,16 +3,16 @@ module ListTool
   class List
     include Enumerable
 
-    attr_reader :name, :items
+    attr_reader :items, :name
 
     def initialize(arg=nil)
       if arg.respond_to?(:to_str)
-        @name = arg
+        @name = arg.gsub('"', "'")
         @items = []
       elsif arg.is_a?(Hash)
         prepare_data(arg)
 
-        @name = arg['name']
+        @name = arg['name'].gsub('"', "'")
 
         @items = []
         arg['items'].each do |item|
@@ -30,7 +30,7 @@ module ListTool
     def rename str
       raise ArgumentError, 'string expected' unless str.is_a?(String)
       old_name = @name
-      @name = str
+      @name = str.gsub('"', "'")
       old_name
     end
 
