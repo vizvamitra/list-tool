@@ -14,5 +14,6 @@ module ListTool
   class FileNotFoundError < StandardError; end
   class NoDefaultListError < StandardError; end
   class ListNotFoundError < StandardError; end;
+  class ItemNotFoundError < StandardError; end;
   class UnknownCommandError < StandardError; end;
 end

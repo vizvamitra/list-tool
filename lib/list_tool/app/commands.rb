@@ -1,4 +1,5 @@
 require_relative './commands/add_item_command.rb'
+require_relative './commands/replace_item_command.rb'
 require_relative './commands/delete_item_command.rb'
 require_relative './commands/show_items_command.rb'
 require_relative './commands/add_list_command.rb'
