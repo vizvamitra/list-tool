@@ -1,10 +1,10 @@
 module ListTool
   module App
 
-    class ShowListsCommand
+    class HelpCommand
 
       def self.match? arg
-        ['sl', 'show-lists'].include? arg
+        ['h', '-h', 'help', '--help'].include? arg
       end
 
       def self.parse argv
@@ -12,15 +12,13 @@ module ListTool
       end
 
       def self.execute options, lister
-        lists = lister.lists
-        Printer.print_lists(lists)
+        Printer.print_usage
       end
 
       def self.help
-        "  sl, show-lists\t\tPrint list of existing lists"
+        "  -h,  --help\t\t\tPrint this message"
       end
 
     end
-
   end
 end

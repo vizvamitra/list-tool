@@ -26,7 +26,7 @@ module ListTool
       end
 
       def self.help
-        "  u,  use LIST\t\tSets default list"
+        "  u,  use LIST\t\t\tSet default list"
       end
 
     end

@@ -31,7 +31,7 @@ module ListTool
       end
 
       def self.help
-        "  a,  add-item TEXT [LIST]\tAdds item with TEXT to given or default list"
+        "  a,  add-item TEXT [LIST]\tAdd item with TEXT to given or default list"
       end
 
     end

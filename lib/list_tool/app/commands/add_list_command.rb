@@ -21,7 +21,7 @@ module ListTool
       end
 
       def self.help
-        "  al, add-list NAME\t\tCreates list with NAME"
+        "  al, add-list NAME\t\tCreate list with NAME"
       end
 
     end

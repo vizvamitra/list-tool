@@ -1,10 +1,10 @@
 module ListTool
   module App
 
-    class ShowListsCommand
+    class VersionCommand
 
       def self.match? arg
-        ['sl', 'show-lists'].include? arg
+        ['v', '-v', 'version', '--version'].include? arg
       end
 
       def self.parse argv
@@ -12,15 +12,13 @@ module ListTool
       end
 
       def self.execute options, lister
-        lists = lister.lists
-        Printer.print_lists(lists)
+        Printer.print_version
       end
 
       def self.help
-        "  sl, show-lists\t\tPrint list of existing lists"
+        "  -v,  --version\t\tPrint version of program"
       end
 
     end
-
   end
 end

@@ -27,7 +27,7 @@ module ListTool
       end
 
       def self.help
-        "  s,  show-items [LIST]\t\tPrints contents of default or given list"
+        "  s,  show-items [LIST]\t\tPrint contents of default or given list"
       end
 
     end

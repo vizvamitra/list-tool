@@ -23,6 +23,18 @@ module ListTool
         puts out
       end
 
+      def self.print_usage
+        out = "#{'USAGE'.green}: clt COMMAND [OPTIONS]\n\nCOMMANDS:\n"
+        Commands::COMMANDS.each do |cmd|
+          out << cmd.help << "\n"
+        end
+        puts out
+      end
+
+      def self.print_version
+        puts "clt version #{VERSION}"
+      end
+
     end
 
   end
