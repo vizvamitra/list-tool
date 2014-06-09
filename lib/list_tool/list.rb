@@ -7,12 +7,12 @@ module ListTool
 
     def initialize(arg=nil)
       if arg.respond_to?(:to_str)
-        @name = arg.gsub('"', "'")
+        @name = arg
         @items = []
       elsif arg.is_a?(Hash)
         prepare_data(arg)
 
-        @name = arg['name'].gsub('"', "'")
+        @name = arg['name']
 
         @items = []
         arg['items'].each do |item|
@@ -30,12 +30,12 @@ module ListTool
     def rename str
       raise ArgumentError, 'string expected' unless str.is_a?(String)
       old_name = @name
-      @name = str.gsub('"', "'")
+      @name = str
       old_name
     end
 
     def to_json
-      json = "{\"name\":\"#{@name}\",\"items\":["
+      json = "{\"name\":\"#{@name.gsub('"', '\"')}\",\"items\":["
       @items.each do |item|
         json += item.to_json
         json += ',' unless item == @items.last

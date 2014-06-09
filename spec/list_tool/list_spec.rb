@@ -216,6 +216,11 @@ describe ListTool::List do
       json_str = "{\"name\":\"Todolist\",\"items\":[{\"text\":\"item1\"},{\"text\":\"item2\"}]}"
       expect(list.to_json).to eq json_str
     end
+
+    it 'substitutes " with \"' do
+      list = ListTool::List.new({"name" => 'name with ""', "items" => []})
+      expect(list.to_json).to eq '{"name":"name with \"\"","items":[]}'
+    end
   end
 
 end

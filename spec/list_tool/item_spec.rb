@@ -37,12 +37,10 @@ describe ListTool::Item do
     it 'returns correct json' do
       expect(item.to_json).to eq "{\"text\":\"item1\"}"
     end
-  end
 
-  describe '#text=' do
-    it 'substitutes " with \'' do
-      item.text = 'text with ""'
-      expect(item.text).to eq "text with ''"
+    it 'substitutes " with \"' do
+      item = ListTool::Item.new('text with ""')
+      expect(item.to_json).to eq '{"text":"text with \"\""}'
     end
   end
 
