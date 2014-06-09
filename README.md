@@ -1,6 +1,6 @@
 # ListTool
 
-This gem may be used to manage lists of text strings (todos, for example) in your ruby application or in a console (honestly, generally in a console).
+This gem may be used to manage lists of text strings (todos, for example) in your ruby application or in a console (to be honest, generally in a console).
 
 ## INSTALLATION
 
@@ -36,11 +36,11 @@ Require list-tool with `require 'list_tool'` command
 
 #### General methods
 
-    lister.lists # => { 'todolist' => 3, 'wishlist' => 2 }, digits are numbers 
-                 # of items in list
+    lister.lists # => { 'todolist' => 3, 'wishlist' => 2 }
+                 # (digits for item quantitiy in a list)
     lister.list(list_index=nil) # => {name: 'list_name', items: ['item1', 'item2']}
 
-For **#list** method, if list index not specified, it will return contents of default list.
+For **#list** method, if list index is not specified, it will return contents of default list.
 
 #### List management methods
 
@@ -59,7 +59,7 @@ For **#list** method, if list index not specified, it will return contents of de
     lister.delete_item(item_index, {list: 2})
     lister.move_item(item_index, :up, {list: 2})
 
-You can omit {list: list_index} argument, if so commands will affect default list.
+You can omit {list: list_index} argument. In this case methods will affect default list.
 
 #### Bonus classes
 
@@ -83,23 +83,23 @@ This gem provides console tool named '**clt**' ('console list tool'), which allo
     USAGE: clt COMMAND [OPTIONS]
 
     COMMANDS:
-        a,  add-item TEXT [LIST]  Add item with TEXT to given or default list
-        r,  replace-item ITEM, TEXT Set ITEM text to TEXT
-        d,  del-item ITEM [LIST]  Delete ITEM from given or default list
-        s,  show-items [LIST]   Print contents of default or given list
-        al, add-list NAME   Create list with NAME
-        rl, rename-list LIST, NAME  Set LIST name to NAME
-        dl, del-list LIST   Delete given LIST
-        sl, show-lists    Print list of existing lists
-        u,  use LIST      Set default list
-       -h,  --help      Print this message
-       -v,  --version     Print version
+        a,  add-item TEXT [LIST]      Add item with TEXT to given or default list
+        r,  replace-item ITEM, TEXT   Set ITEM text to TEXT
+        d,  del-item ITEM [LIST]      Delete ITEM from given or default list
+        s,  show-items [LIST]         Print contents of default or given list
+        al, add-list NAME             Create list with NAME
+        rl, rename-list LIST, NAME    Set LIST name to NAME
+        dl, del-list LIST             Delete given LIST
+        sl, show-lists                Print list of existing lists
+        u,  use LIST                  Set default list
+       -h,  --help                    Print this message
+       -v,  --version                 Print version
 
 clt keeps it's data in **~/.clt/data.json**
 
 ## NOTES
 
-Note that this is my first gem and also my first rspec experiance.
+Note that it is my first gem and also my first rspec experience.
 
 ## CONTACTS
 
