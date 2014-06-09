@@ -32,9 +32,7 @@ module ListTool
 
     def lists
       out = {}
-      @data.each do |list|
-        out[list.name] = list.items.count
-      end
+      @data.each { |list| out[list.name] = list.items.count }
       out
     end
 
@@ -48,9 +46,7 @@ module ListTool
             end
 
       out = {name: list.name, items: []}
-      list.items.each do |item|
-        out[:items] << item.text
-      end
+      list.items.each { |item| out[:items] << item.text }
       out
     end
 
