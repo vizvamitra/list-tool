@@ -61,14 +61,9 @@ module ListTool
     end
 
     def to_json
-      json = "{"
-      json += "\"default\":#{@lists.index(@default_list)}," if @default_list
-      json += "\"lists\":["
-      @lists.each do |list|
-        json += list.to_json
-        json += ',' unless list == @lists.last
-      end
-      json += ']}'
+      hash = {lists: @lists}
+      hash.merge!(default: @lists.index(@default_list)) if @default_list
+      hash.to_json
     end
       
   end

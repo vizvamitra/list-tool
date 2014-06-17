@@ -1,5 +1,4 @@
-{ "default":0,
-  "lists":[
+{ "lists":[
   {
     "name":"Todolist",
     "items":[
@@ -14,5 +13,6 @@
   {
     "name":"Wishlist",
     "items":[]
-  }
-]}
+  }],
+  "default":0
+}

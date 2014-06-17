@@ -14,7 +14,7 @@ module ListTool
       end
     end
 
-    def to_json
+    def to_json options=nil
       "{\"text\":\"#{@text.gsub('"', '\"')}\"}"
     end
 

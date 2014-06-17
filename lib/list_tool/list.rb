@@ -34,13 +34,9 @@ module ListTool
       old_name
     end
 
-    def to_json
-      json = "{\"name\":\"#{@name.gsub('"', '\"')}\",\"items\":["
-      @items.each do |item|
-        json += item.to_json
-        json += ',' unless item == @items.last
-      end
-      json += ']}'
+    def to_json options=nil
+      hash = {name: @name, items: @items}
+      hash.to_json
     end
 
     def each
