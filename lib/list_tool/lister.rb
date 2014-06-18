@@ -5,19 +5,21 @@ module ListTool
       @data = Data.new
     end
 
+    class << self
+      def from_hash(hash)
+        lister = Lister.new
+        lister.instance_variable_set(:@data, Data.new(hash))
+        lister
+      end
+
+      def from_json(json)
+        data = JsonParser.parse(json)
+        from_hash(data)
+      end
+    end
+
     def inspect
       "#<#{self.class}:0x#{self.__id__.to_s(16)}>"
-    end
-
-    def self.from_hash(hash)
-      lister = Lister.new
-      lister.instance_variable_set(:@data, Data.new(hash))
-      lister
-    end
-
-    def self.from_json(json)
-      data = JsonParser.parse(json)
-      from_hash(data)
     end
 
     def load(filename)
@@ -31,9 +33,7 @@ module ListTool
     end
 
     def lists
-      out = {}
-      @data.each { |list| out[list.name] = list.items.count }
-      out
+      @data.map{|list| [list.name, list.items.count] }.to_h
     end
 
     def list(index=nil)
@@ -45,9 +45,7 @@ module ListTool
               @data.default_list
             end
 
-      out = {name: list.name, items: []}
-      list.items.each { |item| out[:items] << item.text }
-      out
+      { name: list.name, items: list.items.map{|item| item.text} }
     end
 
     def method_missing(name, *args, &block)

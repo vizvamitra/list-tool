@@ -5,7 +5,7 @@ module ListTool
 
     attr_reader :items, :name
 
-    def initialize(arg=nil)
+    def initialize(arg)
       if arg.respond_to?(:to_str)
         @name = arg
         @items = []

@@ -4,7 +4,7 @@ describe ListTool::App::Commands do
   subject { ListTool::App::Commands }
 
   it 'stores command list' do
-    commands = ListTool::App.constants.map {|c| ListTool::App.const_get(c)} - [ListTool::App::Commands, ListTool::App::Printer, ListTool::App::Runner]
+    commands = ListTool::App.constants.map {|c| ListTool::App.const_get(c)} - [ListTool::App::Commands, ListTool::App::Printer, ListTool::App::Runner, ListTool::App::Colorizer]
     expect(subject::COMMANDS).to eq commands
   end
 

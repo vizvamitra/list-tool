@@ -44,7 +44,6 @@ module ListTool
     end
 
     def set_default_list(index)
-      raise ArgumentError, 'argument is not an integer' unless index.respond_to?(:to_int)
       return nil if @lists[index] == nil
       @default_list = @lists[index]
     end

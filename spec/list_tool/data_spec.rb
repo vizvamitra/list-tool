@@ -141,12 +141,6 @@ describe Data do
 
     context 'failure' do
 
-      context 'argument is not an integer' do
-        it 'raises ArgumentError' do
-          expect{data.set_default_list('bad_int')}.to raise_error(ArgumentError)
-        end
-      end
-
       context 'no list with given index' do
         it 'returns nil' do
           expect(data.set_default_list(2)).to be_nil
