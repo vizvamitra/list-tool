@@ -1,3 +1,4 @@
+require_relative './commands/command.rb'
 require_relative './commands/add_item_command.rb'
 require_relative './commands/replace_item_command.rb'
 require_relative './commands/delete_item_command.rb'
@@ -17,7 +18,7 @@ module ListTool
 
     class Commands
 
-      COMMANDS = ListTool::App.constants.map {|const| ListTool::App.const_get(const)} - [self, Printer, Runner, Colorizer]
+      COMMANDS = ListTool::App.constants.map {|const| ListTool::App.const_get(const)} - [self, Printer, Runner, Colorizer, Command]
 
       class << self
         def process argv, lister

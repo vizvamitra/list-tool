@@ -36,12 +36,6 @@ describe ListTool::App::AddListCommand do
         end
       end
 
-      context 'when first arg is not a string' do
-        it 'raises ArgumentError' do
-          expect{ subject.parse([1]) }.to raise_error(ArgumentError)
-        end
-      end
-
     end
 
   end

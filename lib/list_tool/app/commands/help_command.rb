@@ -1,24 +1,26 @@
 module ListTool
   module App
 
-    class HelpCommand
+    class HelpCommand < Command
+      class << self
 
-      def self.match? arg
-        ['h', '-h', 'help', '--help'].include? arg
+        def match? arg
+          ['h', '-h', 'help', '--help'].include? arg
+        end
+
+        def parse argv
+          {}
+        end
+
+        def execute options, lister
+          Printer.print_usage
+        end
+
+        def help
+          " -h,  --help\t\t\tPrint this message"
+        end
+
       end
-
-      def self.parse argv
-        {}
-      end
-
-      def self.execute options, lister
-        Printer.print_usage
-      end
-
-      def self.help
-        " -h,  --help\t\t\tPrint this message"
-      end
-
     end
   end
 end

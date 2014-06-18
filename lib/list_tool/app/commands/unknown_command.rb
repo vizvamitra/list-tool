@@ -1,25 +1,27 @@
 module ListTool
   module App
 
-    class UnknownCommand
+    class UnknownCommand < Command
+      class << self
 
-      def self.match? arg
-        @unknown_command = arg
-        true
+        def match? arg
+          @unknown_command = arg
+          true
+        end
+
+        def parse argv
+          {}
+        end
+
+        def execute options, lister
+          raise UnknownCommandError, "unknown command: '#{@unknown_command}'"
+        end
+
+        def help
+          ""
+        end
+
       end
-
-      def self.parse argv
-        {}
-      end
-
-      def self.execute options, lister
-        raise UnknownCommandError, "unknown command: '#{@unknown_command}'"
-      end
-
-      def self.help
-        ""
-      end
-
     end
 
   end

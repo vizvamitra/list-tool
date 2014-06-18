@@ -1,24 +1,27 @@
 module ListTool
   module App
 
-    class VersionCommand
+    class VersionCommand < Command
+      class << self
 
-      def self.match? arg
-        ['v', '-v', 'version', '--version'].include? arg
+        def match? arg
+          ['v', '-v', 'version', '--version'].include? arg
+        end
+
+        def parse argv
+          {}
+        end
+
+        def execute options, lister
+          Printer.print_version
+        end
+
+        def help
+          " -v,  --version\t\t\tPrint version"
+        end
+
       end
-
-      def self.parse argv
-        {}
-      end
-
-      def self.execute options, lister
-        Printer.print_version
-      end
-
-      def self.help
-        " -v,  --version\t\t\tPrint version"
-      end
-
     end
+
   end
 end

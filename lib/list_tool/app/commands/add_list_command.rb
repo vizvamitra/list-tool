@@ -1,29 +1,31 @@
 module ListTool
   module App
 
-    class AddListCommand
+    class AddListCommand < Command
+      class << self
 
-      def self.match? arg
-        ['al', 'add-list'].include? arg
+        def match? arg
+          ['al', 'add-list'].include? arg
+        end
+
+        def parse argv
+          fail_if_not_an_array(argv)
+
+          name = argv.shift
+          ensure_existence_of("list name" => name)
+
+          {name: name}
+        end
+
+        def execute options, lister
+          raise(RuntimeError, "list creation failed") if lister.add_list(options[:name]).nil?
+        end
+
+        def help
+          "  al, add-list NAME\t\tCreate list with NAME"
+        end
+
       end
-
-      def self.parse argv
-        raise ArgumentError, "expected argument to be an array, #{argv.class} given" unless argv.is_a? Array
-        name = argv.shift
-        raise ArgumentError, 'list name not specified' if name.nil?
-        raise ArgumentError, 'name is not a string' unless name.is_a? String
-
-        {name: name}
-      end
-
-      def self.execute options, lister
-        raise(RuntimeError, "list creation failed") if lister.add_list(options[:name]).nil?
-      end
-
-      def self.help
-        "  al, add-list NAME\t\tCreate list with NAME"
-      end
-
     end
 
   end

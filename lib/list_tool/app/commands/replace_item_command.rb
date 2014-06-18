@@ -1,33 +1,32 @@
 module ListTool
   module App
 
-    class ReplaceItemCommand
+    class ReplaceItemCommand < Command
+      class << self
 
-      def self.match? arg
-        ['r', 'replace-item'].include? arg
+        def match? arg
+          ['r', 'replace-item'].include? arg
+        end
+
+        def parse argv
+          fail_if_not_an_array(argv)
+
+          item, name = argv.shift(2)
+          ensure_existence_of('new name' => name)
+
+          { name: name, item: parse_item_number!(item) }
+        end
+
+        def execute options, lister
+          args = [ options[:item], options[:name] ]
+          raise(ItemNotFoundError, 'no item with given number') if lister.change_item(*args).nil?
+        end
+
+        def help
+          "  r,  replace-item ITEM, TEXT\tSet ITEM text to TEXT"
+        end
+
       end
-
-      def self.parse argv
-        raise ArgumentError, "expected argument to be an array, #{argv.class} given" unless argv.is_a? Array
-        item, name = argv.shift(2)
-        raise ArgumentError, 'item number not specified' if item.nil?
-        raise ArgumentError, 'new name not specified' if name.nil?
-        
-        item = Integer(item) - 1 rescue raise(ArgumentError, 'item number must be an integer')
-        raise ArgumentError, "item number can't be less than 1" if item < 0
-
-        {name: name, item: item}
-      end
-
-      def self.execute options, lister
-        args = [ options[:item], options[:name] ]
-        raise(ItemNotFoundError, 'no item with given number') if lister.change_item(*args).nil?
-      end
-
-      def self.help
-        "  r,  replace-item ITEM, TEXT\tSet ITEM text to TEXT"
-      end
-
     end
 
   end

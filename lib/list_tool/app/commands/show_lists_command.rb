@@ -1,25 +1,27 @@
 module ListTool
   module App
 
-    class ShowListsCommand
+    class ShowListsCommand < Command
+      class << self
 
-      def self.match? arg
-        ['sl', 'show-lists'].include? arg
+        def match? arg
+          ['sl', 'show-lists'].include? arg
+        end
+
+        def parse argv
+          {}
+        end
+
+        def execute options, lister
+          lists = lister.lists
+          Printer.print_lists(lists)
+        end
+
+        def help
+          "  sl, show-lists\t\tPrint list of existing lists"
+        end
+
       end
-
-      def self.parse argv
-        {}
-      end
-
-      def self.execute options, lister
-        lists = lister.lists
-        Printer.print_lists(lists)
-      end
-
-      def self.help
-        "  sl, show-lists\t\tPrint list of existing lists"
-      end
-
     end
 
   end
