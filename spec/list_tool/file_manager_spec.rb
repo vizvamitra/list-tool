@@ -42,7 +42,7 @@ describe ListTool::FileManager do
 
   describe '.save' do
     let(:filename){ "some_file" }
-    let(:data){ ListTool::Data.new }
+    let(:data){ ListTool::ListerData.new }
 
     context 'success' do
       it 'saves given data to specified file' do

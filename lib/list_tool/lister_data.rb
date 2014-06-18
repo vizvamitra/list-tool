@@ -1,6 +1,6 @@
 module ListTool
 
-  class Data
+  class ListerData
     include Enumerable
     
     attr_reader :lists, :default_list

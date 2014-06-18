@@ -6,7 +6,7 @@ describe ListTool::Lister do
   describe '#initialize' do
 
     it 'creates Lister with empty data' do
-      expect(ListTool::Data).to receive(:new).with no_args
+      expect(ListTool::ListerData).to receive(:new).with no_args
       ListTool::Lister.new
     end
 
@@ -51,7 +51,7 @@ describe ListTool::Lister do
     it 'returns self' do
       allow( ListTool::FileManager ).to receive(:load)
       allow( ListTool::JsonParser ).to receive(:parse)
-      allow( ListTool::Data ).to receive(:new).and_return( ListTool::Data.new() )
+      allow( ListTool::ListerData ).to receive(:new).and_return( ListTool::ListerData.new() )
       expect( lister.load('data_file') ).to eq lister
     end
   end
@@ -62,7 +62,7 @@ describe ListTool::Lister do
     let(:filename){ 'test_file' }
 
     it 'calls FileManager.save to save its data to file' do
-      data = ListTool::Data.new
+      data = ListTool::ListerData.new
       lister.instance_variable_set(:@data, data)
       expect( ListTool::FileManager ).to receive(:save).with(filename, data)
       lister.save(filename)

@@ -63,11 +63,11 @@ You can omit {list: list_index} argument. In this case methods will affect defau
 
 #### Bonus classes
 
-You may also want to use such classes as **ListTool::List**, **ListTool::Item** and **ListTool::Data**.
+You may also want to use such classes as **ListTool::List**, **ListTool::Item** and **ListTool::ListerData**.
 
 List class responds to all item management methods (**\*\_item**) and few others, like **#clear!**, **#rename**, **#each** (returns each Item) and **#to_json**
 
-Data class responds to all list management methods (**\*\_list**) and also has **#to_json** and **#each** (returns each list) methods.
+ListerData class responds to all list management methods (**\*\_list**) and also has **#to_json** and **#each** (returns each list) methods.
 
 #### Errors
 

@@ -2,13 +2,13 @@ module ListTool
   class Lister
 
     def initialize
-      @data = Data.new
+      @data = ListerData.new
     end
 
     class << self
       def from_hash(hash)
         lister = Lister.new
-        lister.instance_variable_set(:@data, Data.new(hash))
+        lister.instance_variable_set(:@data, ListerData.new(hash))
         lister
       end
 
@@ -24,7 +24,7 @@ module ListTool
 
     def load(filename)
       json = FileManager.load(filename)
-      @data = Data.new( JsonParser.parse(json) )
+      @data = ListerData.new( JsonParser.parse(json) )
       self
     end
 
