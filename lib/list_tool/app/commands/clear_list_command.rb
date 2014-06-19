@@ -12,6 +12,7 @@ module ListTool
           fail_if_not_an_array(argv)
           
           list = argv.shift
+
           {list: parse_list_number!(list)}
         end
 
