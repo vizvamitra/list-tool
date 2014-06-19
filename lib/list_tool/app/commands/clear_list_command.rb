@@ -20,7 +20,7 @@ module ListTool
         end
 
         def help
-          "  cl, clear-list LIST\t\tDelete given LIST"
+          "  cl, clear-list LIST\t\tClear given LIST"
         end
 
       end

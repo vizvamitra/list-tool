@@ -39,8 +39,10 @@ Require list-tool with `require 'list_tool'` command
     lister.lists # => { 'todolist' => 3, 'wishlist' => 2 }
                  # (digits for item quantitiy in a list)
     lister.list(list_index=nil) # => {name: 'list_name', items: ['item1', 'item2']}
+    lister.default_list # => {name: 'list_name', items: ['item1', 'item2']}
 
 For **#list** method, if list index is not specified, it will return contents of default list.
+For **#default_list** method, if default list is not set, it will return nil.
 
 #### List management methods
 
@@ -71,7 +73,7 @@ ListerData class responds to all list management methods (**\*\_list**) and also
 
 #### Errors
 
-- all lister.\*_item methods return nil if list was not found.
+- all lister.\*_item methods raise **ListTool::ListNotFoundError** if list was not found.
 - lister.list and lister.\*_list methods raise **ListTool::NoDefaultListError** if list index is not specified and default list is not set
 - #save and #load methods may return **ListTool::FileAccessError** or **ListTool::FileNotFoundError**
 - other errors are generally **ArgumentError** s
@@ -90,6 +92,7 @@ This gem provides console tool named '**clt**' ('console list tool'), which allo
         al, add-list NAME             Create list with NAME
         rl, rename-list LIST, NAME    Set LIST name to NAME
         dl, del-list LIST             Delete given LIST
+        cl, clear-list LIST           Clear given LIST
         sl, show-lists                Print list of existing lists
         u,  use LIST                  Set default list
        -h,  --help                    Print this message

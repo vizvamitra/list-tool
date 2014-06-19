@@ -17,6 +17,10 @@ module ListTool
       set_default_list(hash['default']) if hash['default']
     end
 
+    def inspect
+      "#<#{self.class}:0x#{self.__id__.to_s(16)}, lists: [#{lists.map(&:name).join(', ')}], default_list: #{default_list.name}>"
+    end
+
     def each
       @lists.each { |list| yield(list) }
     end

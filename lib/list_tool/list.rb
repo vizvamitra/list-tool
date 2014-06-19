@@ -23,6 +23,10 @@ module ListTool
       end
     end
 
+    def inspect
+      "#<#{self.class}:0x#{self.__id__.to_s(16)}, name: #{name}, items: [#{items.map(&:text).join(', ')}]>"
+    end
+
     def clear!
       @items = []
     end
@@ -45,6 +49,7 @@ module ListTool
 
     def add_item text
       @items << Item.new(text)
+      @items[-1]
     end
 
     def delete_item num

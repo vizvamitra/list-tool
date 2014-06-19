@@ -37,38 +37,50 @@ module ListTool
     end
 
     def list(index=nil)
-      list = if index
-              return nil if @data.lists[index].nil?
-              @data.lists[index]
-            else
-              raise NoDefaultListError, "default list not set" if @data.default_list.nil?
-              @data.default_list
-            end
+      list = get_list(index)
+      return nil if list.nil?
 
       { name: list.name, items: list.items.map{|item| item.text} }
     end
 
-    def method_missing(name, *args, &block)
-      if name =~ /_list$/
-        object = @data
-      elsif name =~ /_item$/
-        object = if args[-1].is_a?(Hash) && args[-1].has_key?(:list)
-                  return nil if @data.lists[ args[-1][:list] ].nil?
-                  index = args.pop()[:list]
-                  @data.lists[index]
-                else
-                  raise NoDefaultListError, "default list not set" if @data.default_list.nil?
-                  @data.default_list
-                end
+    def default_list
+      if @data.default_list
+        list = @data.default_list
+        { name: list.name, items: list.items.map{|item| item.text} }
+      else
+        nil
+      end
+    end
+
+    def method_missing(method_name, *args, &block)
+      if method_name =~ /_list$/
+        receiver = @data
+      elsif method_name =~ /_item$/
+        if args[-1].is_a?(Hash) && args[-1].has_key?(:list)
+          # then last argument is an options hash
+          options = args.pop
+          index = options[:list]
+        end
+        receiver = get_list(index)
+        receiver || raise(ListNotFoundError, "list with given index doesn't exist")
       else
         super
       end
 
-      result = object.send(name, *args, &block)
-      return nil if result.nil?
-      self
+      receiver.send(method_name, *args, &block)
     rescue NoMethodError => e
-      raise NoMethodError, "undefined method '#{name.to_s}' for #{self.inspect}"
+      raise NoMethodError, "undefined method '#{method_name.to_s}' for #{self.inspect}"
+    end
+
+    private
+
+    def get_list index=nil
+      if index
+        @data.lists[index]
+      else
+        raise NoDefaultListError, "default list not set" if @data.default_list.nil?
+        @data.default_list
+      end
     end
 
   end
