@@ -92,6 +92,7 @@ This gem provides console tool named '**clt**' ('console list tool'), which allo
         al, add-list NAME             Create list with NAME
         rl, rename-list LIST, NAME    Set LIST name to NAME
         dl, del-list LIST             Delete given LIST
+        cl, clear-list LIST           Clear given LIST
         sl, show-lists                Print list of existing lists
         u,  use LIST                  Set default list
        -h,  --help                    Print this message
