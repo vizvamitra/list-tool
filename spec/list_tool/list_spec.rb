@@ -67,6 +67,14 @@ describe ListTool::List do
   end
 
 
+  describe '#inspect' do
+    it "returns class name, object id, list name and array of item texts" do
+      str = "#<ListTool::List:0x#{list.__id__.to_s(16)}, name: Todolist, items: [item1, item2]>"
+      expect( list.inspect ).to eq str
+    end
+  end
+
+
   describe '#clear!' do
     it "clears items array" do
       list.clear!

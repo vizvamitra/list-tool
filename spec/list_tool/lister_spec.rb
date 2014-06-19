@@ -72,35 +72,36 @@ describe ListTool::Lister do
 
   describe '#list' do
 
-    context 'success' do
-      context 'no options' do
-        it 'returns hash with list name and array of item texts' do
-          expect( lister.list(0) ).to eq( {name: 'Todolist', items: ['item1', 'item2']} )
-        end
-      end
-
-      context 'list number not given' do
-        it 'returns contents of default list' do
-          expect( lister.list ).to eq( {name: 'Todolist', items: ['item1', 'item2']} )
-        end
+    context 'no options' do
+      it 'returns hash with list name and array of item texts' do
+        expect( lister.list(0) ).to eq( {name: 'Todolist', items: ['item1', 'item2']} )
       end
     end
 
-    context 'failure' do
-      context 'no list with given index' do
-        it 'returns nil' do
-          expect( lister.list(2) ).to be_nil
-        end
-      end
-
-      context 'default list not set and list not given' do
-        it 'raises NoDefaultListError' do
-          lister = ListTool::Lister.new
-          expect{ lister.list }.to raise_error(ListTool::NoDefaultListError)
-        end
+    context 'list number not given' do
+      it 'returns contents of default list' do
+        expect( lister.list ).to eq( {name: 'Todolist', items: ['item1', 'item2']} )
       end
     end
 
+  end
+
+
+  describe '#default_list' do
+    let(:data) { lister.instance_variable_get(:@data) }
+
+    context 'when default list is set' do
+      it 'returns hash with default ist name and array of item texts' do
+        expect( lister.default_list ).to eq( {name: 'Todolist', items: ['item1', 'item2']} )
+      end
+    end
+
+    context 'when default list is not set' do
+      it 'returns nil' do
+        allow( data ).to receive(:default_list).and_return(nil)
+        expect( lister.default_list ).to be_nil
+      end
+    end
   end
 
 
@@ -112,75 +113,88 @@ describe ListTool::Lister do
 
 
   describe '#method_missing' do
+    let(:data) { lister.instance_variable_get(:@data) }
 
-    context 'success' do
-
-      it 'returns self' do
-        expect( lister.add_item('text') ).to eq lister
+    context 'method name ends with _list' do
+      it 'deligates method call to ListerData' do
+        expect(data).to receive(:add_list).with("name")
+        lister.add_list("name")
       end
+    end
 
-      context '_list method given' do
-        it 'deligates method call to @data' do
-          data = lister.instance_variable_get(:@data)
-          expect( data ).to receive(:add_list).with('new_list')
-          lister.add_list('new_list')
-        end
-      end
+    context 'when method name ends with _item' do
+      context 'and list index is not specified' do
 
-      context '_item method given' do
-
-        context 'list number not specified' do
+        context 'if default list is set' do
           it 'deligates method call to default list' do
-            default_list = lister.instance_variable_get(:@data).default_list
-            expect( default_list ).to receive(:add_item).with('new_item')
-
-            lister.add_item('new_item')
+            list = data.default_list
+            expect(list).to receive(:add_item).with("text")
+            lister.add_item("text")
           end
         end
 
-        context 'list number specified' do
-          it 'deligates method call to specified list' do
-            list = lister.instance_variable_get(:@data).lists[0]
-            expect( list ).to receive(:add_item).with('new_item')
-
-            lister.add_item('new_item', list: 0)
+        context 'if default list is not set' do
+          it 'raises NoDefaultListError' do
+            allow( data ).to receive(:default_list).and_return(nil)
+            expect{ lister.add_item }.to raise_error(ListTool::NoDefaultListError)
           end
         end
 
       end
 
+      context 'and list index is specified' do
+
+        context 'if list with given index exists' do
+          it 'deligates method call to list with given index' do
+            list = data.lists[1]
+            expect(list).to receive(:add_item).with("text")
+            lister.add_item("text", {list: 1})
+          end
+        end
+
+        context 'if there is no list with given index' do
+          it 'raises ListNotFoundError' do
+            expect{ lister.add_item("text", {list: 3}) }.to raise_error(ListTool::ListNotFoundError)
+          end
+        end
+
+      end
     end
 
-    context 'failure' do
+    context 'for any other methods' do
+      it 'raises NoMethodError' do
+        expect{ lister.unknown_method }.to raise_error(NoMethodError)
+      end
+    end
 
-      context 'call to unknown method' do
-        it 'raises NoMethodError' do
-          message = "undefined method 'no_such_method' for #{lister.inspect}"
-          expect{lister.no_such_method}.to raise_error(NoMethodError, message)
+  end
+
+
+  describe '#get_list' do
+    context 'when list index given' do
+      it 'returns corresponding list object' do
+        list = lister.instance_variable_get(:@data).instance_variable_get(:@lists)[0]
+        expect( lister.send(:get_list, 0) ).to eq list
+      end
+    end
+
+    context 'when list index not given' do
+
+      context 'default list is set' do
+        it 'returns default list' do
+          list = lister.instance_variable_get(:@data).instance_variable_get(:@default_list)
+          expect( lister.send(:get_list) ).to eq list
         end
       end
 
-      context 'no list with specified number' do
-        it 'returns nil' do
-          expect( lister.add_item('new_item', list: 3) ).to be_nil
-        end
-      end
-
-      context 'method returned nil' do
-        it 'returns nil' do
-          expect( lister.delete_item(3) ).to be_nil
-        end
-      end
-
-      context 'list number not specified and default list not set' do
+      context 'default list is not set' do
         it 'raises NoDefaultListError' do
-          lister = ListTool::Lister.new
-          expect{ lister.add_item('new item') }.to raise_error(ListTool::NoDefaultListError)
+          allow( lister.instance_variable_get(:@data) ).to receive(:default_list).and_return(nil)
+          expect{ lister.send(:get_list) }.to raise_error(ListTool::NoDefaultListError)
         end
       end
-
+      
     end
-
   end
 
 end

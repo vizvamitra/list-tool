@@ -51,6 +51,14 @@ describe ListTool::ListerData do
   end
 
 
+  describe '#inspect' do
+    it "returns class name, object id, array of list names and default list name" do
+      str = "#<ListTool::ListerData:0x#{data.__id__.to_s(16)}, lists: [Todolist, Wishlist], default_list: Todolist>"
+      expect( data.inspect ).to eq str
+    end
+  end
+
+
   describe '#add_list' do
 
     context 'hash given' do
