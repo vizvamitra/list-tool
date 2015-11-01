@@ -33,7 +33,7 @@ module ListTool
     end
 
     def lists
-      @data.map{|list| [list.name, list.items.count] }.to_h
+      Hash[*@data.map{|list| [list.name, list.items.count] }.flatten]
     end
 
     def list(index=nil)

@@ -6,7 +6,7 @@ require 'list_tool/version'
 Gem::Specification.new do |spec|
   spec.name          = "list-tool"
   spec.version       = ListTool::VERSION
-  spec.date          = '2014-06-08'
+  spec.date          = '2015-11-01'
   spec.authors       = ["Dmitrii Krasnov"]
   spec.email         = ["vizvamitra@gmail.com"]
   spec.summary       = "list-tool-#{ListTool::VERSION}"
